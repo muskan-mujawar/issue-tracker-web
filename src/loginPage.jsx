@@ -3,9 +3,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
   function handleClick() {
     const data = { userId: userId, password: password };
@@ -20,6 +21,7 @@ export default function Login() {
         navigate("/issueDetails");
       })
       .catch((err) => {
+        alert("incorect credentials");
         console.log("Login failed", err);
       });
   }
