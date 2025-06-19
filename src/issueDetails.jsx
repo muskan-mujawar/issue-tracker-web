@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 import { FaRegThumbsUp } from "react-icons/fa";
@@ -6,10 +6,14 @@ import { useNavigate } from "react-router-dom";
 
 import Navbar from "./navbar";
 
-export default function IssueDetails() {
+export default function IssueDetails({ handleData }) {
   const navigate = useNavigate();
   const [issue, setIssue] = useState([]);
   const [userVotes, setUserVotes] = useState({});
+
+  useEffect(() => {
+    getIssueDetails();
+  });
 
   function getIssueDetails() {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -19,7 +23,6 @@ export default function IssueDetails() {
       .get("http://localhost:3000/api/issues/all?limit=10", header)
       .then((res) => {
         setIssue(res.data.data.issues);
-        console.log(res.data.data.issues);
       })
       .catch((err) => {
         console.log("Failed to fetch issues", err);
@@ -41,14 +44,6 @@ export default function IssueDetails() {
     <div>
       <Navbar />
       <div className="p-4">
-        <button
-          onClick={getIssueDetails}
-          className="border rounded-3xl bg-orange-600 p-[10px] hover:bg-orange-700"
-        >
-          Get Issues
-        </button>
-        {issue.length > 0 ? <p>issues:</p> : null}
-
         {issue.map((item, index) => (
           <div
             key={item._id}

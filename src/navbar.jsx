@@ -1,6 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { AiFillAndroid } from "react-icons/ai";
 
-function Navbar() {
+function Navbar({ issue }) {
+  const navigate = useNavigate();
+
+  function logOut() {
+    localStorage.removeItem("token");
+    console.log("clecked");
+    navigate("/");
+  }
+
   return (
     <nav className="navbar sticky-top bg-body-tertiary">
       <div className=" container-fluid">
@@ -13,32 +23,25 @@ function Navbar() {
             placeholder="Search"
             aria-label="Search"
           />
-          <button className=" btn btn-outline-success" type="submit">
+          <button className=" btn btn-outline-info" type="submit">
             Search
           </button>
         </form>
-        <div class="dropdown">
+        <div className="dropdown dropstart ">
           <button
-            class="btn btn-secondary dropdown-toggle "
+            className="btn  btn-outline-dark"
+            style={{ borderRadius: "50%", height: "40px" }}
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-          ></button>
-          <ul class="dropdown-menu">
+          >
+            <AiFillAndroid />
+          </button>
+          <ul className="dropdown-menu">
             <li>
-              <a class="dropdown-item" href="#">
-                Action
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                Another action
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">
-                Something else here
-              </a>
+              <button onClick={logOut} className="ps-[15px]">
+                Log Out
+              </button>
             </li>
           </ul>
         </div>
